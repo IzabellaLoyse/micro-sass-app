@@ -3,18 +3,21 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { signIn } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 
 export function AuthForm() {
   const form = useForm();
-  const handleSubmit = form.handleSubmit((data) => {
+  const handleSubmit = form.handleSubmit(async (data) => {
     console.log(data);
+
+    await signIn('email', { email: data.email });
   });
 
   return (
     <div className="mx-auto max-w-md space-y-6 py-12">
       <div className="space-y-2 text-center">
-        <h1 className="text-3xl font-bold">Sign in with a magic link</h1>
+        <h1 className="text-3xl font-bold">Sign in </h1>
         <p className="text-gray-500 dark:text-gray-400">
           Enter your email below to receive a sign-in link.
         </p>
@@ -31,7 +34,7 @@ export function AuthForm() {
           />
         </div>
         <Button className="w-full" type="submit">
-          Send magic link
+          Enviar email
         </Button>
       </form>
     </div>
